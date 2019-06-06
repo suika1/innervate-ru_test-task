@@ -13,7 +13,7 @@ export default oncePerServices((services) => {
 
     typeDefs.push(`
       type User {
-        id: Int,
+        id: Int!,
         login: String
         fio: String
         email: String
