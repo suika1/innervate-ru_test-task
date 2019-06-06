@@ -9,7 +9,7 @@ const serviceConfig = configApi.get('externalUserListService');
 
 export default oncePerServices(function (services) {
   const {
-    postgres = missingService('postgres')
+    postgres = require('../postgres'),
   } = services;
   
   class UserListService {
