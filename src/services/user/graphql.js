@@ -10,7 +10,7 @@ export default oncePerServices((services) => {
     
     graphqlBuilderSchema.build_options(args);
     const { parentLevelBuilder, typeDefs, builderContext } = args;
-    
+
     typeDefs.push(`
       type User {
         id: Int,
@@ -21,11 +21,16 @@ export default oncePerServices((services) => {
         isBlocked: Boolean
         birthdate: String
       }
+
+      type AuthUserObj {
+        ok: Boolean
+        error: String
+      }
     `);
     
     parentLevelBuilder.addQuery({
-      name: `userList`,
-      type: `[User]`,
+      name: 'userList',
+      type: '[User]',
       args: `
         isManager: Boolean,
         isBlocked: Boolean,
@@ -33,6 +38,15 @@ export default oncePerServices((services) => {
       `,
       resolver: resolvers.userList(builderContext),
     });
-    
+
+    parentLevelBuilder.addMutation({
+      name: 'authUser',
+      type: 'AuthUserObj',
+      args: `
+        login: String,
+        password: String
+      `,
+      resolver: resolvers.authUser(builderContext),
+    });
   }
 });
